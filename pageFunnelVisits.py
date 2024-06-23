@@ -6,20 +6,20 @@ checkout = pd.read_csv('checkout.csv', parse_dates=[1])
 purchase = pd.read_csv('purchase.csv', parse_dates=[1])
 
 #Inspect the DataFrames
-print(visits.head())
-print(len(visits))
-print()
-print(cart.head())
-print(len(cart))
-print()
-print(checkout.head())
-print()
-print(purchase.head())
-print()
+# print(visits.head())
+# print(len(visits))
+# print()
+# print(cart.head())
+# print(len(cart))
+# print()
+# print(checkout.head())
+# print()
+# print(purchase.head())
+# print()
 
 #Combine visits and cart
 visitsAndCart = pd.merge(visits, cart, how="left")
-print(visitsAndCart)
+print(visitsAndCart.head(7))
 
 #find out the number of rows
 lenVisitsAndCart = len(visitsAndCart)
@@ -37,7 +37,7 @@ print()
 
 #merge cart and checkout, count users
 cartAndCheckout = pd.merge(cart, checkout, how="left")
-print(cartAndCheckout)
+#print(cartAndCheckout)
 print(f"The count of users with anything in their cart: {len(cartAndCheckout)}")
 countNullCheckoutUsers = len(cartAndCheckout[cartAndCheckout["checkout_time"].isnull()])
 print(f"The count of users did not proceed to checkout: {countNullCheckoutUsers}")
@@ -49,4 +49,14 @@ print()
 allData = visits.merge(cart, how="left") \
     .merge(checkout, how="left") \
     .merge(purchase, how="left")
-print(allData)
+#print(allData.head())
+print()
+
+#users proceeded to checkout, but did not purchase
+checkoutAndPurchase = pd.merge(checkout, purchase, how="left")
+#print(checkoutAndPurchase.head(10))
+countNullPurchaseUsers = len(checkoutAndPurchase[checkoutAndPurchase.purchase_time.isnull()])
+print(f"The count of users which did not purchase: {countNullPurchaseUsers}")
+percentNullPurchaseUsers = float(countNullPurchaseUsers) / len(checkoutAndPurchase) * 100
+print(f"Percent of users proceeded to checkout, but did not purchase: {percentNullPurchaseUsers:.2f}")
+print()
