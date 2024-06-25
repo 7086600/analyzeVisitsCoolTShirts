@@ -20,6 +20,7 @@ purchase = pd.read_csv('purchase.csv', parse_dates=[1])
 #Combine visits and cart
 visitsAndCart = pd.merge(visits, cart, how="left")
 print(visitsAndCart.head(7))
+print()
 
 #find out the number of rows
 lenVisitsAndCart = len(visitsAndCart)
@@ -60,3 +61,12 @@ print(f"The count of users which did not purchase: {countNullPurchaseUsers}")
 percentNullPurchaseUsers = float(countNullPurchaseUsers) / len(checkoutAndPurchase) * 100
 print(f"Percent of users proceeded to checkout, but did not purchase: {percentNullPurchaseUsers:.2f}")
 print()
+
+#Add a column that is the difference between purchase_time and visit_time
+allData["time_to_purchase"] = (allData["purchase_time"] - allData["visit_time"])
+print(allData.head(10))
+print()
+
+#Calculate the average time to purchase
+meanTimeToPurchase = allData.time_to_purchase.mean()
+print(f"The average time to purchase: {meanTimeToPurchase}")
