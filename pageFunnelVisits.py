@@ -32,7 +32,7 @@ lenNullCartUsers = len(nullCartUsers)
 print(f"The count of users without any items in carts are: {lenNullCartUsers}")
 
 #percent of users who visited ended up not placing a t-shirt in their cart
-percentNullCartUsers = float(lenNullCartUsers) / lenVisitsAndCart * 100
+percentNullCartUsers = float(lenNullCartUsers) / float(lenVisitsAndCart) * 100
 print(f"Percent of users who visited and not placing anything in their cart: {percentNullCartUsers}")
 print()
 
@@ -42,7 +42,7 @@ cartAndCheckout = pd.merge(cart, checkout, how="left")
 print(f"The count of users with anything in their cart: {len(cartAndCheckout)}")
 countNullCheckoutUsers = len(cartAndCheckout[cartAndCheckout["checkout_time"].isnull()])
 print(f"The count of users did not proceed to checkout: {countNullCheckoutUsers}")
-percentNullCheckoutUsers = float(countNullCheckoutUsers) / len(cartAndCheckout) * 100
+percentNullCheckoutUsers = float(countNullCheckoutUsers) / float(len(cartAndCheckout)) * 100
 print(f"Percent of users who put items in their cart, but did not proceed to checkout: {percentNullCheckoutUsers:.2f}")
 print()
 
