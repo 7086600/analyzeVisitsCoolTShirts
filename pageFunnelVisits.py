@@ -50,21 +50,27 @@ print()
 allData = visits.merge(cart, how="left") \
     .merge(checkout, how="left") \
     .merge(purchase, how="left")
-#print(allData.head())
+print(allData.head(10))
 print()
 
-#users proceeded to checkout, but did not purchase
-checkoutAndPurchase = pd.merge(checkout, purchase, how="left")
+#users proceeded to checkout
+reachedCheckoutUsers = allData[~allData.checkout_time.isnull()]
+print(len(reachedCheckoutUsers))
+checkoutNotPurchaseUsers = allData[(~allData.checkout_time.isnull()) & (allData.purchase_time.isnull())]
+print(len(checkoutNotPurchaseUsers))
+checkoutNotPurchasePercent = float(len(checkoutNotPurchaseUsers)) / float(len(reachedCheckoutUsers)) * 100
+print(checkoutNotPurchasePercent)
+print()
 #print(checkoutAndPurchase.head(10))
-countNullPurchaseUsers = len(checkoutAndPurchase[checkoutAndPurchase.purchase_time.isnull()])
-print(f"The count of users which did not purchase: {countNullPurchaseUsers}")
-percentNullPurchaseUsers = float(countNullPurchaseUsers) / len(checkoutAndPurchase) * 100
-print(f"Percent of users proceeded to checkout, but did not purchase: {percentNullPurchaseUsers:.2f}")
+# countNullPurchaseUsers = len(checkoutAndPurchase[checkoutAndPurchase.purchase_time.isnull()])
+# print(f"The count of users which did not purchase: {countNullPurchaseUsers}")
+# percentNullPurchaseUsers = float(countNullPurchaseUsers) / len(checkoutAndPurchase) * 100
+# print(f"Percent of users proceeded to checkout, but did not purchase: {percentNullPurchaseUsers:.2f}")
 print()
 
 #Add a column that is the difference between purchase_time and visit_time
 allData["time_to_purchase"] = (allData["purchase_time"] - allData["visit_time"])
-print(allData.head(10))
+print(allData.head(5))
 print()
 
 #Calculate the average time to purchase
