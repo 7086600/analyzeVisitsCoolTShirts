@@ -55,17 +55,11 @@ print()
 
 #users proceeded to checkout
 reachedCheckoutUsers = allData[~allData.checkout_time.isnull()]
-print(len(reachedCheckoutUsers))
-checkoutNotPurchaseUsers = allData[(~allData.checkout_time.isnull()) & (allData.purchase_time.isnull())]
-print(len(checkoutNotPurchaseUsers))
+print(f'The count of users proceeded to checkout: {len(reachedCheckoutUsers)}')
+checkoutNotPurchaseUsers = allData[(allData.purchase_time.isnull()) & (~allData.checkout_time.isnull())]
+print(f"The count of users which did not purchase: {len(checkoutNotPurchaseUsers)}")
 checkoutNotPurchasePercent = float(len(checkoutNotPurchaseUsers)) / float(len(reachedCheckoutUsers)) * 100
-print(checkoutNotPurchasePercent)
-print()
-#print(checkoutAndPurchase.head(10))
-# countNullPurchaseUsers = len(checkoutAndPurchase[checkoutAndPurchase.purchase_time.isnull()])
-# print(f"The count of users which did not purchase: {countNullPurchaseUsers}")
-# percentNullPurchaseUsers = float(countNullPurchaseUsers) / len(checkoutAndPurchase) * 100
-# print(f"Percent of users proceeded to checkout, but did not purchase: {percentNullPurchaseUsers:.2f}")
+print(f"Percent of users proceeded to checkout, but did not purchase: {checkoutNotPurchasePercent:.2f}")
 print()
 
 #Add a column that is the difference between purchase_time and visit_time
